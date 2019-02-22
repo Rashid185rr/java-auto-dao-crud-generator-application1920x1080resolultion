@@ -29,7 +29,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Rashid Majeed
+ * @author tahir hussain
  */
 public class DaoPattern {
  
