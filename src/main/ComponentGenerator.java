@@ -360,7 +360,7 @@ public class ComponentGenerator {
         declaration.append("JScrollPane scrollPane;\n");
         //constructor
         StringBuilder constr = new StringBuilder();
-        constr.append("super(\""+frame.getAppTitle()+"\");\n");
+        constr.append("super(\""+frame.getTitle()+"\");\n");
         constr.append(
                 impVar + "DaoImpl=new " + tableName + "DaoImpl();\n"
         );

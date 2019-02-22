@@ -21,7 +21,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
-import main.CustomizedDaoPattern;
 import main.DaoPattern;
 import main.Functions;
 
@@ -61,6 +60,8 @@ public AppBuilder(AppInfo thisAppInfo,AppInfo newAppInfo,Table1[] unselectedTabl
         this.thisAppInfo = thisAppInfo;
         this.newAppInfo = newAppInfo;
         
+        System.out.println("This project path:"+thisAppInfo.getPath());
+        System.out.println("New Project path:"+newAppInfo.getPath());
         this.unselectedTables = unselectedTables;
         this.selectedTables = selectedTables;
         database = new Database(newAppInfo.getAppTitle(), selectedTables);
@@ -224,15 +225,13 @@ public AppBuilder(AppInfo thisAppInfo,AppInfo newAppInfo,Table1[] unselectedTabl
 
     private void createBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createBtnActionPerformed
         System.out.println("App Name--->"+newAppInfo.getAppTitle() +" \n Frame List \n ");
-        
         for(FrameInfo cr:newAppInfo.getFrameList()){
             System.out.println("Frame Information-->"+cr);
         }
 //         database=new Database(newAppInfo.getDbName(),selectedTables);
-         
         if (database.getTables() != null) {
 
-            CustomizedDaoPattern.createDaoPattern(thisAppInfo, newAppInfo, database);
+            DaoPattern.createDaoPattern(thisAppInfo, newAppInfo, database);
             AddFunctions.addFunction(newAppInfo, database);
            newProjPath=newAppInfo.getPath();
            thisProjPath=thisAppInfo.getPath();

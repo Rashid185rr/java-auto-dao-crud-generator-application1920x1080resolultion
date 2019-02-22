@@ -13,12 +13,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.ImageIcon;
 import javax.swing.BorderFactory;
-import com.toedter.calendar.JDateChooser;
-import java.util.Date;
-import java.sql.Timestamp;
 import com.utility.TableMdf;
-import com.beans.UsertypeBean;
-import com.daoimpl.UsertypeDaoImpl;
+import com.beans.UserBean;
+import com.daoimpl.UserDaoImpl;
 import com.utility.DateFormatter;
 import com.utility.Query;
 import javax.swing.JButton;
@@ -32,19 +29,19 @@ import java.awt.Color;
  *
  * @author tahir hussain
  */
-public class UsertypeFrame extends javax.swing.JFrame {
+public class UserFrame extends javax.swing.JFrame {
 
     /**
-     * Creates new form UsertypeFrame
+     * Creates new form UserFrame
      */
-    public UsertypeFrame() {
-super("null");
-usertypeDaoImpl=new UsertypeDaoImpl();
+    public UserFrame() {
+super("User");
+userDaoImpl=new UserDaoImpl();
 initComponents() ;
-obj=new Object[]{userTypeIdTxt,userTypeTxt,createdByTxt,createdDateTs,modifiedByTxt,modifiedDateTs};
-heading=new String[]{"User Type Id","User Type","Created By","Created Date","Modified By","Modified Date"};
+obj=new Object[]{userIdTxt,userNameTxt,passwordTxt};
+heading=new String[]{"User Id","User Name","Password"};
 setValues();
- colName=new String[]{userTypeIdTxt.getName(),userTypeTxt.getName(),createdByTxt.getName(),createdDateTs.getName(),modifiedByTxt.getName(),modifiedDateTs.getName()};
+ colName=new String[]{userIdTxt.getName(),userNameTxt.getName(),passwordTxt.getName()};
     }
 
     /**
@@ -77,7 +74,7 @@ scrollPane = new javax.swing.JScrollPane();
         table.setSurrendersFocusOnKeystroke(true);
                  table.setFont(new java.awt.Font("sansserif", 1, 20));
         table.setForeground(new java.awt.Color(255, 255, 255));
-         table.setModel(TableMdf.getDefaultTableModel(usertypeDaoImpl.getUsertypeAllRecords()));
+         table.setModel(TableMdf.getDefaultTableModel(userDaoImpl.getUserAllRecords()));
         getContentPane().add(scrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(
 10,600,1873,417));
 table.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -86,153 +83,98 @@ table.addMouseListener(new java.awt.event.MouseAdapter() {
             }
         });
         scrollPane.setViewportView(table);
-userTypeIdTxt =new JTextField(10);
-userTypeIdTxt.setToolTipText("User Type Id");
-userTypeIdTxt.setBounds(255,60,250,40);
-userTypeIdTxt.setName("user_type_id");
-userTypeIdTxt.setFont(new java.awt.Font("sansserif", 1, 20));
-userTypeIdTxt.setBorder(
+userIdTxt =new JTextField(10);
+userIdTxt.setToolTipText("User Id");
+userIdTxt.setBounds(255,60,250,40);
+userIdTxt.setName("user_id");
+userIdTxt.setFont(new java.awt.Font("sansserif", 1, 20));
+userIdTxt.setBorder(
 new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED,
 new java.awt.Color(153, 153, 153),
 new java.awt.Color(153, 153, 153), null, null));
-userTypeIdTxt.setText("User Type Id");
-userTypeIdTxt.setForeground(new java.awt.Color(204,204,204));
-userTypeIdTxt.setBackground(new java.awt.Color(53,59,72));
-panel.add(userTypeIdTxt,new org.netbeans.lib.awtextra.AbsoluteConstraints(255,60,250,40));
-userTypeIdTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+userIdTxt.setText("User Id");
+userIdTxt.setForeground(new java.awt.Color(204,204,204));
+userIdTxt.setBackground(new java.awt.Color(53,59,72));
+panel.add(userIdTxt,new org.netbeans.lib.awtextra.AbsoluteConstraints(255,60,250,40));
+userIdTxt.addFocusListener(new java.awt.event.FocusAdapter() {
 public void focusGained(java.awt.event.FocusEvent evt) {
-userTypeIdTxtFocusGained(evt);
+userIdTxtFocusGained(evt);
 }
 });
-userTypeIdTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+userIdTxt.addFocusListener(new java.awt.event.FocusAdapter() {
 public void focusLost(java.awt.event.FocusEvent evt) {
-userTypeIdTxtFocusLost(evt);
+userIdTxtFocusLost(evt);
 }
-});userTypeIdlbl=new JLabel();
-userTypeIdlbl.setText("User Type Id");
-userTypeIdlbl.setBounds(55,60,250,40);
-userTypeIdlbl.setFont(new java.awt.Font("sansserif", 1, 20));
-userTypeIdlbl.setForeground(new java.awt.Color(255, 255, 255));
-userTypeIdlbl.setBackground(new java.awt.Color(53,59,72));
-panel.add(userTypeIdlbl,new org.netbeans.lib.awtextra.AbsoluteConstraints(55,60,250,40));
-userTypeTxt =new JTextField(255);
-userTypeTxt.setToolTipText("User Type");
-userTypeTxt.setBounds(255,120,250,40);
-userTypeTxt.setName("user_type");
-userTypeTxt.setFont(new java.awt.Font("sansserif", 1, 20));
-userTypeTxt.setBorder(
+});userIdlbl=new JLabel();
+userIdlbl.setText("User Id");
+userIdlbl.setBounds(55,60,250,40);
+userIdlbl.setFont(new java.awt.Font("sansserif", 1, 20));
+userIdlbl.setForeground(new java.awt.Color(255, 255, 255));
+userIdlbl.setBackground(new java.awt.Color(53,59,72));
+panel.add(userIdlbl,new org.netbeans.lib.awtextra.AbsoluteConstraints(55,60,250,40));
+userNameTxt =new JTextField(255);
+userNameTxt.setToolTipText("User Name");
+userNameTxt.setBounds(255,120,250,40);
+userNameTxt.setName("user_name");
+userNameTxt.setFont(new java.awt.Font("sansserif", 1, 20));
+userNameTxt.setBorder(
 new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED,
 new java.awt.Color(153, 153, 153),
 new java.awt.Color(153, 153, 153), null, null));
-userTypeTxt.setText("User Type");
-userTypeTxt.setForeground(new java.awt.Color(204,204,204));
-userTypeTxt.setBackground(new java.awt.Color(53,59,72));
-panel.add(userTypeTxt,new org.netbeans.lib.awtextra.AbsoluteConstraints(255,120,250,40));
-userTypeTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+userNameTxt.setText("User Name");
+userNameTxt.setForeground(new java.awt.Color(204,204,204));
+userNameTxt.setBackground(new java.awt.Color(53,59,72));
+panel.add(userNameTxt,new org.netbeans.lib.awtextra.AbsoluteConstraints(255,120,250,40));
+userNameTxt.addFocusListener(new java.awt.event.FocusAdapter() {
 public void focusGained(java.awt.event.FocusEvent evt) {
-userTypeTxtFocusGained(evt);
+userNameTxtFocusGained(evt);
 }
 });
-userTypeTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+userNameTxt.addFocusListener(new java.awt.event.FocusAdapter() {
 public void focusLost(java.awt.event.FocusEvent evt) {
-userTypeTxtFocusLost(evt);
+userNameTxtFocusLost(evt);
 }
-});userTypelbl=new JLabel();
-userTypelbl.setText("User Type");
-userTypelbl.setBounds(55,120,250,40);
-userTypelbl.setFont(new java.awt.Font("sansserif", 1, 20));
-userTypelbl.setForeground(new java.awt.Color(255, 255, 255));
-userTypelbl.setBackground(new java.awt.Color(53,59,72));
-panel.add(userTypelbl,new org.netbeans.lib.awtextra.AbsoluteConstraints(55,120,250,40));
-createdByTxt =new JTextField(10);
-createdByTxt.setToolTipText("Created By");
-createdByTxt.setBounds(255,180,250,40);
-createdByTxt.setName("created_by");
-createdByTxt.setFont(new java.awt.Font("sansserif", 1, 20));
-createdByTxt.setBorder(
+});userNamelbl=new JLabel();
+userNamelbl.setText("User Name");
+userNamelbl.setBounds(55,120,250,40);
+userNamelbl.setFont(new java.awt.Font("sansserif", 1, 20));
+userNamelbl.setForeground(new java.awt.Color(255, 255, 255));
+userNamelbl.setBackground(new java.awt.Color(53,59,72));
+panel.add(userNamelbl,new org.netbeans.lib.awtextra.AbsoluteConstraints(55,120,250,40));
+passwordTxt =new JTextField(255);
+passwordTxt.setToolTipText("Password");
+passwordTxt.setBounds(255,180,250,40);
+passwordTxt.setName("password");
+passwordTxt.setFont(new java.awt.Font("sansserif", 1, 20));
+passwordTxt.setBorder(
 new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED,
 new java.awt.Color(153, 153, 153),
 new java.awt.Color(153, 153, 153), null, null));
-createdByTxt.setText("Created By");
-createdByTxt.setForeground(new java.awt.Color(204,204,204));
-createdByTxt.setBackground(new java.awt.Color(53,59,72));
-panel.add(createdByTxt,new org.netbeans.lib.awtextra.AbsoluteConstraints(255,180,250,40));
-createdByTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+passwordTxt.setText("Password");
+passwordTxt.setForeground(new java.awt.Color(204,204,204));
+passwordTxt.setBackground(new java.awt.Color(53,59,72));
+panel.add(passwordTxt,new org.netbeans.lib.awtextra.AbsoluteConstraints(255,180,250,40));
+passwordTxt.addFocusListener(new java.awt.event.FocusAdapter() {
 public void focusGained(java.awt.event.FocusEvent evt) {
-createdByTxtFocusGained(evt);
+passwordTxtFocusGained(evt);
 }
 });
-createdByTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+passwordTxt.addFocusListener(new java.awt.event.FocusAdapter() {
 public void focusLost(java.awt.event.FocusEvent evt) {
-createdByTxtFocusLost(evt);
+passwordTxtFocusLost(evt);
 }
-});createdBylbl=new JLabel();
-createdBylbl.setText("Created By");
-createdBylbl.setBounds(55,180,250,40);
-createdBylbl.setFont(new java.awt.Font("sansserif", 1, 20));
-createdBylbl.setForeground(new java.awt.Color(255, 255, 255));
-createdBylbl.setBackground(new java.awt.Color(53,59,72));
-panel.add(createdBylbl,new org.netbeans.lib.awtextra.AbsoluteConstraints(55,180,250,40));
-createdDateTs=new JDateChooser();
-createdDateTs.setBounds(255,240,250,40);
-createdDateTs.setName("created_date");
-createdDateTs.setBackground(new java.awt.Color(53,59,72));
-createdDateTs.setFont(new java.awt.Font("sansserif", 0, 14));
-panel.add(createdDateTs,new org.netbeans.lib.awtextra.AbsoluteConstraints(255,240,250,40));
-createdDatelbl=new JLabel();
-createdDatelbl.setText("Created Date");
-createdDatelbl.setBounds(55,240,250,40);
-createdDatelbl.setFont(new java.awt.Font("sansserif", 1, 20));
-createdDatelbl.setForeground(new java.awt.Color(255, 255, 255));
-createdDatelbl.setBackground(new java.awt.Color(53,59,72));
-panel.add(createdDatelbl,new org.netbeans.lib.awtextra.AbsoluteConstraints(55,240,250,40));
-modifiedByTxt =new JTextField(10);
-modifiedByTxt.setToolTipText("Modified By");
-modifiedByTxt.setBounds(255,300,250,40);
-modifiedByTxt.setName("modified_by");
-modifiedByTxt.setFont(new java.awt.Font("sansserif", 1, 20));
-modifiedByTxt.setBorder(
-new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED,
-new java.awt.Color(153, 153, 153),
-new java.awt.Color(153, 153, 153), null, null));
-modifiedByTxt.setText("Modified By");
-modifiedByTxt.setForeground(new java.awt.Color(204,204,204));
-modifiedByTxt.setBackground(new java.awt.Color(53,59,72));
-panel.add(modifiedByTxt,new org.netbeans.lib.awtextra.AbsoluteConstraints(255,300,250,40));
-modifiedByTxt.addFocusListener(new java.awt.event.FocusAdapter() {
-public void focusGained(java.awt.event.FocusEvent evt) {
-modifiedByTxtFocusGained(evt);
-}
-});
-modifiedByTxt.addFocusListener(new java.awt.event.FocusAdapter() {
-public void focusLost(java.awt.event.FocusEvent evt) {
-modifiedByTxtFocusLost(evt);
-}
-});modifiedBylbl=new JLabel();
-modifiedBylbl.setText("Modified By");
-modifiedBylbl.setBounds(55,300,250,40);
-modifiedBylbl.setFont(new java.awt.Font("sansserif", 1, 20));
-modifiedBylbl.setForeground(new java.awt.Color(255, 255, 255));
-modifiedBylbl.setBackground(new java.awt.Color(53,59,72));
-panel.add(modifiedBylbl,new org.netbeans.lib.awtextra.AbsoluteConstraints(55,300,250,40));
-modifiedDateTs=new JDateChooser();
-modifiedDateTs.setBounds(255,360,250,40);
-modifiedDateTs.setName("modified_date");
-modifiedDateTs.setBackground(new java.awt.Color(53,59,72));
-modifiedDateTs.setFont(new java.awt.Font("sansserif", 0, 14));
-panel.add(modifiedDateTs,new org.netbeans.lib.awtextra.AbsoluteConstraints(255,360,250,40));
-modifiedDatelbl=new JLabel();
-modifiedDatelbl.setText("Modified Date");
-modifiedDatelbl.setBounds(55,360,250,40);
-modifiedDatelbl.setFont(new java.awt.Font("sansserif", 1, 20));
-modifiedDatelbl.setForeground(new java.awt.Color(255, 255, 255));
-modifiedDatelbl.setBackground(new java.awt.Color(53,59,72));
-panel.add(modifiedDatelbl,new org.netbeans.lib.awtextra.AbsoluteConstraints(55,360,250,40));
+});passwordlbl=new JLabel();
+passwordlbl.setText("Password");
+passwordlbl.setBounds(55,180,250,40);
+passwordlbl.setFont(new java.awt.Font("sansserif", 1, 20));
+passwordlbl.setForeground(new java.awt.Color(255, 255, 255));
+passwordlbl.setBackground(new java.awt.Color(53,59,72));
+panel.add(passwordlbl,new org.netbeans.lib.awtextra.AbsoluteConstraints(55,180,250,40));
 backBtn=new JButton();
 backBtn.setText("BACK");
 backBtn.setBounds(200,530,140,50);
 backBtn.setFont(new java.awt.Font("sansserif", 1, 20));
-backBtn.setIcon(new ImageIcon(getClass().getResource("/com/images/back (6).png")));
+backBtn.setIcon(new ImageIcon(getClass().getResource("/com/images/back (5).png")));
 backBtn.setBorder(
 new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED,
 new java.awt.Color(153, 153, 153),
@@ -248,7 +190,7 @@ addBtn=new JButton();
 addBtn.setText("ADD");
 addBtn.setBounds(400,530,140,50);
 addBtn.setFont(new java.awt.Font("sansserif", 1, 20));
-addBtn.setIcon(new ImageIcon(getClass().getResource("/com/images/add (9).png")));
+addBtn.setIcon(new ImageIcon(getClass().getResource("/com/images/java (1).png")));
 addBtn.setBorder(
 new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED,
 new java.awt.Color(153, 153, 153),
@@ -264,7 +206,7 @@ deleteBtn=new JButton();
 deleteBtn.setText("DELETE");
 deleteBtn.setBounds(600,530,140,50);
 deleteBtn.setFont(new java.awt.Font("sansserif", 1, 20));
-deleteBtn.setIcon(new ImageIcon(getClass().getResource("/com/images/delete  (3).png")));
+deleteBtn.setIcon(new ImageIcon(getClass().getResource("/com/images/delete  (8).png")));
 deleteBtn.setBorder(
 new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED,
 new java.awt.Color(153, 153, 153),
@@ -280,7 +222,7 @@ updateBtn=new JButton();
 updateBtn.setText("UPDATE");
 updateBtn.setBounds(800,530,140,50);
 updateBtn.setFont(new java.awt.Font("sansserif", 1, 20));
-updateBtn.setIcon(new ImageIcon(getClass().getResource("/com/images/update (11).png")));
+updateBtn.setIcon(new ImageIcon(getClass().getResource("/com/images/update (2).png")));
 updateBtn.setBorder(
 new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED,
 new java.awt.Color(153, 153, 153),
@@ -312,7 +254,7 @@ nextBtn=new JButton();
 nextBtn.setText("NEXT");
 nextBtn.setBounds(1200,530,140,50);
 nextBtn.setFont(new java.awt.Font("sansserif", 1, 20));
-nextBtn.setIcon(new ImageIcon(getClass().getResource("/com/images/next (4).png")));
+nextBtn.setIcon(new ImageIcon(getClass().getResource("/com/images/next (2).png")));
 nextBtn.setBorder(
 new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED,
 new java.awt.Color(153, 153, 153),
@@ -325,7 +267,7 @@ nextBtnActionPerformed(evt);
 }
 });
 searchTxt =new JTextField(250);
-searchTxt.setToolTipText("Search Usertype");
+searchTxt.setToolTipText("Search User");
 searchTxt.setBounds(1400,530,255,50);
 searchTxt.setName("search");
 searchTxt.setFont(new java.awt.Font("sansserif", 1, 20));
@@ -333,7 +275,7 @@ searchTxt.setBorder(
 new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED,
 new java.awt.Color(153, 153, 153),
 new java.awt.Color(153, 153, 153), null, null));
-searchTxt.setText("Search Usertype");
+searchTxt.setText("Search User");
 searchTxt.setForeground(new java.awt.Color(189,195,199));
 searchTxt.setBackground(new java.awt.Color(53,59,72));
 panel.add(searchTxt,new org.netbeans.lib.awtextra.AbsoluteConstraints(1400,530,255,50));
@@ -394,20 +336,20 @@ searchTxtKeyReleased(evt);
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UsertypeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UsertypeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UsertypeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UsertypeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UsertypeFrame().setVisible(true);
+                new UserFrame().setVisible(true);
             }
         });
     }
@@ -415,74 +357,56 @@ searchTxtKeyReleased(evt);
     // Variables declaration - do not modify
     // End of variables declaration                   
 JPanel panel;
- private void userTypeIdTxtFocusGained(java.awt.event.FocusEvent evt) {
-if(!userTypeIdTxt.getText().equals("User Type Id")){
-userTypeIdTxt.setText(userTypeIdTxt.getText());
+ private void userIdTxtFocusGained(java.awt.event.FocusEvent evt) {
+if(!userIdTxt.getText().equals("User Id")){
+userIdTxt.setText(userIdTxt.getText());
  }else{
-userTypeIdTxt.setText("");
+userIdTxt.setText("");
 }
 
 
 }
 
- private void userTypeIdTxtFocusLost(java.awt.event.FocusEvent evt) {
-if(userTypeIdTxt.getText()==null || userTypeIdTxt.getText().equals("")){
+ private void userIdTxtFocusLost(java.awt.event.FocusEvent evt) {
+if(userIdTxt.getText()==null || userIdTxt.getText().equals("")){
 
-userTypeIdTxt.setText("User Type Id");
+userIdTxt.setText("User Id");
 }
 
 }
 
- private void userTypeTxtFocusGained(java.awt.event.FocusEvent evt) {
-if(!userTypeTxt.getText().equals("User Type")){
-userTypeTxt.setText(userTypeTxt.getText());
+ private void userNameTxtFocusGained(java.awt.event.FocusEvent evt) {
+if(!userNameTxt.getText().equals("User Name")){
+userNameTxt.setText(userNameTxt.getText());
  }else{
-userTypeTxt.setText("");
+userNameTxt.setText("");
 }
 
 
 }
 
- private void userTypeTxtFocusLost(java.awt.event.FocusEvent evt) {
-if(userTypeTxt.getText()==null || userTypeTxt.getText().equals("")){
+ private void userNameTxtFocusLost(java.awt.event.FocusEvent evt) {
+if(userNameTxt.getText()==null || userNameTxt.getText().equals("")){
 
-userTypeTxt.setText("User Type");
+userNameTxt.setText("User Name");
 }
 
 }
 
- private void createdByTxtFocusGained(java.awt.event.FocusEvent evt) {
-if(!createdByTxt.getText().equals("Created By")){
-createdByTxt.setText(createdByTxt.getText());
+ private void passwordTxtFocusGained(java.awt.event.FocusEvent evt) {
+if(!passwordTxt.getText().equals("Password")){
+passwordTxt.setText(passwordTxt.getText());
  }else{
-createdByTxt.setText("");
+passwordTxt.setText("");
 }
 
 
 }
 
- private void createdByTxtFocusLost(java.awt.event.FocusEvent evt) {
-if(createdByTxt.getText()==null || createdByTxt.getText().equals("")){
+ private void passwordTxtFocusLost(java.awt.event.FocusEvent evt) {
+if(passwordTxt.getText()==null || passwordTxt.getText().equals("")){
 
-createdByTxt.setText("Created By");
-}
-
-}
-
- private void modifiedByTxtFocusGained(java.awt.event.FocusEvent evt) {
-if(!modifiedByTxt.getText().equals("Modified By")){
-modifiedByTxt.setText(modifiedByTxt.getText());
- }else{
-modifiedByTxt.setText("");
-}
-
-
-}
-
- private void modifiedByTxtFocusLost(java.awt.event.FocusEvent evt) {
-if(modifiedByTxt.getText()==null || modifiedByTxt.getText().equals("")){
-
-modifiedByTxt.setText("Modified By");
+passwordTxt.setText("Password");
 }
 
 }
@@ -490,21 +414,21 @@ modifiedByTxt.setText("Modified By");
  private void tableMouseClicked(java.awt.event.MouseEvent evt) {
 fillFieldsFromTable();
 }public void setValues(){
-values=new Object[]{userTypeIdTxt.getText(),userTypeTxt.getText(),createdByTxt.getText(),createdDateTs.getDate(),modifiedByTxt.getText(),modifiedDateTs.getDate()};}
+values=new Object[]{userIdTxt.getText(),userNameTxt.getText(),passwordTxt.getText()};}
 public void backBtnActionPerformed(ActionEvent event){
 back(); 
 }public void addBtnActionPerformed(ActionEvent event){
-addUsertype(); 
+addUser(); 
 }public void deleteBtnActionPerformed(ActionEvent event){
-deleteUsertype(); 
+deleteUser(); 
 }public void updateBtnActionPerformed(ActionEvent event){
-updateUsertype(); 
+updateUser(); 
 }public void viewBtnActionPerformed(ActionEvent event){
-viewUsertype(); 
+viewUser(); 
 }public void nextBtnActionPerformed(ActionEvent event){
 next(); 
 } private void searchTxtFocusGained(java.awt.event.FocusEvent evt) {
-if(!searchTxt.getText().equals("Search Usertype")){
+if(!searchTxt.getText().equals("Search User")){
 searchTxt.setText(searchTxt.getText());
  }else{
 searchTxt.setText("");
@@ -516,7 +440,7 @@ searchTxt.setText("");
  private void searchTxtFocusLost(java.awt.event.FocusEvent evt) {
 if(searchTxt.getText()==null || searchTxt.getText().equals("")){
 //write code for focus lost
-searchTxt.setText("Search Usertype");
+searchTxt.setText("Search User");
 }
 
 }
@@ -530,20 +454,14 @@ public void searchTxtKeyReleased(java.awt.event.KeyEvent event){
 TableMdf.tableSort(table,searchTxt);
 
 }
-JTextField userTypeIdTxt;
-JLabel userTypeIdlbl;
-JTextField userTypeTxt;
-JLabel userTypelbl;
-JTextField createdByTxt;
-JLabel createdBylbl;
-JDateChooser createdDateTs;
-JLabel createdDatelbl;
-JTextField modifiedByTxt;
-JLabel modifiedBylbl;
-JDateChooser modifiedDateTs;
-JLabel modifiedDatelbl;
-UsertypeBean usertypeBean;
-UsertypeDaoImpl usertypeDaoImpl;
+JTextField userIdTxt;
+JLabel userIdlbl;
+JTextField userNameTxt;
+JLabel userNamelbl;
+JTextField passwordTxt;
+JLabel passwordlbl;
+UserBean userBean;
+UserDaoImpl userDaoImpl;
 JScrollPane scrollPane;
 Object[] obj;
 String[] heading;

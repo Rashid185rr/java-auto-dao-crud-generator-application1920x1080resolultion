@@ -759,7 +759,7 @@ System.out.println("---> path:"+path);
 
         query = "\"INSERT INTO " + table.getTableName() + " " + query + "\"";
         functionContent = functionContent.replace("QUERYHERE", query);
-        functionContent = functionContent.replace("SETFUNCTION", String.format(setFunction + "\n var=pre.executeUpdate();\n"));
+        functionContent = functionContent.replace("SETFUNCTION", String.format(setFunction + "\n var=pre.executeUpdate(); \n if(var==1){JOptionPane.showMessageDialog(null,\"Inserted\");}\n"));
         return functionContent;
     }
 
@@ -795,7 +795,7 @@ setFunction.append(ComponentMdf.getSet(column,ind++,tableVar+".get"+Functions.ge
        
            System.out.println("tableName"+tableName);
              
-        functionContent = functionContent.replace("SETFUNCTION", setFunction.append("\n var=pre.executeUpdate();\n"));
+        functionContent = functionContent.replace("SETFUNCTION", setFunction.append("\n var=pre.executeUpdate(); if(var==1){JOptionPane.showMessageDialog(null,\"Updated\");}\n"));
         return functionContent;
     }
 
@@ -874,7 +874,7 @@ setFunction.append(ComponentMdf.getSet(column,ind++,tableVar+".get"+Functions.ge
         String query = "DELETE FROM " + table.getTableName() + " where " + column.getColName() + "=?";
         //String setFunction="pre.set"+ComponentMdf.getType(column)+"(1,"+column.getColName()+");\n";
 
-        String setFunction = ComponentMdf.getSet(column, 1, column.getColName()) + "; \n var=pre.executeUpdate();\n";
+        String setFunction = ComponentMdf.getSet(column, 1, column.getColName()) + "; \n var=pre.executeUpdate(); if(var==1){JOptionPane.showMessageDialog(null,\"Deleted\");}\n";
         functionContent = functionContent.replace("QUERYHERE", "\"" + query + "\"");
         functionContent = functionContent.replace("SETFUNCTION", setFunction);
 
@@ -899,7 +899,7 @@ setFunction.append(ComponentMdf.getSet(column,ind++,tableVar+".get"+Functions.ge
         a=a.replace(","," AND ");
         String query = "DELETE FROM " + table.getTableName() + " where " + a;
         functionContent = functionContent.replace("QUERYHERE", "\"" + query + "\"");
-        functionContent = functionContent.replace("SETFUNCTION", setFunction+"var=pre.executeUpdate();\n");
+        functionContent = functionContent.replace("SETFUNCTION", setFunction+"var=pre.executeUpdate(); \n if(var==1){JOptionPane.showMessageDialog(null,\"Deleted\");}\n");
 
         return functionContent;
     }
@@ -958,7 +958,9 @@ setFunction.append(ComponentMdf.getSet(column,ind++,tableVar+".get"+Functions.ge
 
         functionContent.append(String.format("\n try{ \n"));
 
-        functionContent.append(String.format("Connection connection=" + connectionClassName + ".getConnection(\"" + db.getDbName() + "\","
+        functionContent.append(String.format(""
+                + "Class.forName(\"com.mysql.jdbc.Driver\");\n"
+                + "Connection connection=" + connectionClassName + ".getConnection(\"" + db.getDbName() + "\","
                 + "\"" + db.getUserName() + "\","
                 + "\"" + db.getPassword() + "\""
                 + ");\n"));
@@ -966,7 +968,9 @@ setFunction.append(ComponentMdf.getSet(column,ind++,tableVar+".get"+Functions.ge
         String commaColumns = String.format("PreparedStatement pre=connection.prepareStatement(QUERYHERE);\nSETFUNCTION\n");
 
         functionContent.append(commaColumns);
-        functionContent.append(String.format("}catch(SQLException exception){\n"
+        functionContent.append(String.format("}"
+                + "catch(ClassNotFoundException e){e.printStackTrace();\n}"
+                + "catch(SQLException exception){\n"
                 + "JOptionPane.showMessageDialog(null,exception.toString());\n}"));
 
         if (declare != null && !declare.trim().equals("")) {
